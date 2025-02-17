@@ -11,7 +11,7 @@
 <body class="bg-gray-100 h-screen flex flex-col">
     
     <!-- Include Navbar -->
-    <jsp:include page="index.jsp" />
+    <jsp:include page="header.jsp" />
 
     <!-- Centered Signup Form -->
     <div class="flex justify-center items-center flex-grow">
@@ -19,7 +19,7 @@
             <h2 class="text-xl font-bold text-center text-black">Signup</h2>
             <p class="text-gray-500 text-center mb-4 text-sm">Create an account to get started</p>
 
-            <form action="signupServlet" method="post">
+            <form action="SignupServlet" method="post">
                 <!-- Full Name -->
                 <div class="mb-3">
                     <label class="block text-black font-medium text-sm">Full Name</label>

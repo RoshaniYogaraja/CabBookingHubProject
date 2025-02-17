@@ -152,7 +152,7 @@
 <body>
 
     <!-- Include Navbar -->
-    <jsp:include page="index.jsp" />
+    <%--<jsp:include page="header.jsp" />--%>
 
     <div class="call-section">
         <div class="container">
@@ -202,11 +202,6 @@
                 <a href="https://www.twitter.com" target="_blank">Twitter</a>
             </div>
         </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        Copyright 2025. All rights reserved.
     </div>
 
 </body>

@@ -13,7 +13,7 @@
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
     <!-- Include Navbar -->
-    <jsp:include page="index.jsp" />
+    <jsp:include page="header.jsp" />
 
     <!-- Main Content -->
     <div class="flex-grow flex items-center justify-center px-6 py-5"> <!-- Add padding here for spacing -->
