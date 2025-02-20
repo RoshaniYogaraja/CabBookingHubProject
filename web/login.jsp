@@ -23,8 +23,14 @@
 
                 <%-- Display Error Message if Login Fails --%>
                 <% String error = request.getParameter("error");
-                if (error != null) { %>
+                    if (error != null) { %>
                 <p class="text-red-500 text-center"><i class="fa-solid fa-exclamation-circle"></i> Invalid email or password.</p>
+                <% } %>
+
+                <%-- Display Success Message after Signup --%>
+                <% String signupSuccess = request.getParameter("signup");
+                    if ("success".equals(signupSuccess)) { %>
+                <p class="text-green-500 text-center"><i class="fa-solid fa-check-circle"></i> Signup successful! Please log in to continue.</p>
                 <% }%>
 
                 <!-- Start of form -->

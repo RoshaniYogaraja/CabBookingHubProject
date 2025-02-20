@@ -1,19 +1,40 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Signup</title>
+
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+
+        <style>
+            .toast {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: #28a745;
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 14px;
+                display: none;
+                z-index: 9999;
+            }
+
+            .toast-error {
+                background-color: #dc3545;
+            }
+        </style>
+
     </head>
     <body class="bg-gray-100 h-screen flex flex-col">
 
-        <!-- Include Navbar -->
+        <!-- Include Nav bar -->
         <jsp:include page="header.jsp" />
 
-        <!-- Centered Signup Form -->
+        <!-- Centered Sign up Form -->
         <div class="flex justify-center items-center flex-grow">
             <div class="bg-white shadow-lg rounded-2xl p-6 w-96">
                 <h2 class="text-xl font-bold text-center text-black">Signup</h2>
@@ -67,7 +88,12 @@
             </div>
         </div>
 
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">Signup Successful!</div>
+        <div id="toastError" class="toast toast-error">Signup Failed. Please try again!</div>
+
         <script>
+            // Toggle password visibility
             function togglePassword(inputId, iconId) {
                 const passwordField = document.getElementById(inputId);
                 const icon = document.getElementById(iconId);
@@ -81,6 +107,30 @@
                     icon.classList.add("fa-eye-slash");
                 }
             }
+
+            // Show Toast Message based on URL parameter
+            window.onload = function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const signupStatus = urlParams.get('signup');
+                const error = urlParams.get('error');
+
+                if (signupStatus === 'success') {
+                    // Show success toast
+                    document.getElementById("toast").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("toast").style.display = "none";
+                    }, 3000);
+                }
+
+                if (error === 'db_error') {
+                    // Show error toast
+                    document.getElementById("toastError").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("toastError").style.display = "none";
+                    }, 3000);
+                }
+            }
         </script>
+
     </body>
 </html>

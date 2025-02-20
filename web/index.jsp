@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -119,35 +119,36 @@
     <body class="transition-colors duration-300 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
         <!-- Navbar -->
         <nav class="relative z-10 shadow-md w-full bg-white dark:bg-gray-900 transition-colors duration-300">
-            <div class="container mx-auto py-6"> <!-- Increased padding -->
-                <div class="flex items-center justify-between px-6"> <!-- Added padding to container -->
-                    <a href="index.jsp" class="text-4xl font-bold"> <!-- Increased font size -->
+            <div class="container mx-auto py-4">
+                <div class="flex items-center justify-between px-4">
+                    <a href="index.jsp" class="text-3xl font-bold">
                         <span class="text-gray-900 dark:text-white">Cab</span>
                         <span class="text-primary">Booking</span>
                         <span class="text-primary">Hub</span>
                     </a>
-                    <div class="hidden md:flex items-center gap-8"> <!-- Increased gap between items -->
-                        <ul class="flex items-center gap-8"> <!-- Increased gap between menu items -->
-                            <li><a href="index.jsp" class="text-lg font-medium text-gray-900 dark:text-white hover:underline">Home</a></li>
-                            <li><a href="#aboutus" class="text-lg font-medium text-gray-900 dark:text-white hover:underline">About Us</a></li>
-                            <li><a href="#booking" class="text-lg font-medium text-gray-900 dark:text-white hover:underline">Booking</a></li>
-                            <li><a href="#contactus" class="text-lg font-medium text-gray-900 dark:text-white hover:underline">Contact Us</a></li>
+
+                    <div class="hidden md:flex items-center gap-6">
+                        <ul class="flex items-center gap-6">
+                            <li><a href="index.jsp" class="text-lg font-medium text-gray-900 dark:text-white">Home</a></li>
+                            <li><a href="#aboutus" class="text-lg font-medium text-gray-900 dark:text-white">About Us</a></li>
+                            <li><a href="#booking" class="text-lg font-medium text-gray-900 dark:text-white">Booking</a></li>
+                            <li><a href="#contactus" class="text-lg font-medium text-gray-900 dark:text-white">Contact Us</a></li>
                         </ul>
-                        <a href="login.jsp" class="bg-primary text-black px-6 py-2 rounded-full">Login</a> <!-- Increased padding -->
+                        <a href="login.jsp" class="bg-primary text-black px-6 py-2 rounded-full">Login</a>
+
                         <!-- Theme Toggle Button -->
-                        <button onclick="toggleTheme()" class="p-3 text-gray-900 dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                            <svg id="lightIcon" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        <button onclick="toggleTheme()" class="p-2 text-gray-900 dark:text-white">
+                            <svg id="lightIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
-                            <svg id="darkIcon" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                            <svg id="darkIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                             </svg>
                         </button>
                     </div>
                 </div>
             </div>
         </nav>
-
 
         <!-- Hero Section -->
         <div class="hero-container">
@@ -161,35 +162,31 @@
 
         <!-- About Us Section -->
         <section id="aboutus" class="py-16 bg-gray-100 dark:bg-gray-800">
-            <!--        <div class="container mx-auto px-4 text-center">
-                        <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">About Us</h2>
-                        <p class="text-lg text-gray-700 dark:text-gray-300">We are dedicated to providing reliable and convenient cab booking services for all your travel needs. With a focus on customer satisfaction, we aim to make your journey smooth and hassle-free.</p>
-                    </div>-->
             <jsp:include page="aboutus.jsp" />
         </section>
 
         <!-- Booking Section -->
-        <!--        <section id="booking" class="py-16 bg-white dark:bg-gray-900">
-        <jsp:include page="booking.jsp" />
-    </section>-->
+        <section id="booking" class="py-16 bg-white dark:bg-gray-900">
+            <jsp:include page="booking.jsp" />
+        </section>
 
         <!-- Contact Us Section -->
         <section id="contactus" class="py-16 bg-gray-100 dark:bg-gray-800">
-
             <jsp:include page="contactus.jsp" />
         </section>
-          <section id="contactus" class="py-16">
-
+        
+        <!-- Footer -->
+        <section class="py-16">
             <jsp:include page="footer.jsp" />
         </section>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
         <script>
-                        AOS.init({
-                            duration: 800,
-                            offset: 120,
-                            once: true
-                        });
+            AOS.init({
+                duration: 800,
+                offset: 120,
+                once: true
+            });
         </script>
     </body>
 </html>

@@ -10,9 +10,9 @@ import java.sql.*;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/cab_booking"; 
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3308/cab_booking"; 
     private static final String JDBC_USER = "root"; 
-    private static final String JDBC_PASSWORD = "root"; 
+    private static final String JDBC_PASSWORD = ""; 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
