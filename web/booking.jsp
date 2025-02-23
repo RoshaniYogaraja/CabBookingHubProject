@@ -4,9 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Book Your Cab - Cab Booking Hub</title>
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
         <style>
             * {
                 margin: 0;
@@ -25,52 +23,52 @@
                 color: var(--text-color);
                 line-height: 1.6;
             }
-            .container {
+            .booking-container {
                 max-width: 1200px;
                 margin: 0 auto;
-                padding: 0 15px;
+                padding: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 50px;
             }
-            .call-section {
-                background-color: var(--primary-color);
+            .left-section {
+                flex: 1;
+                padding: 20px;
+            }
+            .left-section h1 {
+                font-size: 2.5rem;
+                font-weight: 700;
                 color: var(--secondary-color);
-                text-align: center;
-                padding: 50px 0;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                margin-bottom: 10px;
             }
-            .call-section p {
+            .left-section p {
                 font-size: 1.2rem;
                 margin-bottom: 15px;
-                font-weight: 500;
             }
-            .call-section h1 {
-                font-size: 3.5rem;
-                font-weight: 700;
+            .book-now-btn {
+                background: var(--secondary-color);
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: 0.3s;
             }
-            .call-section a {
-                color: var(--secondary-color);
-                text-decoration: none;
-                transition: color 0.3s ease;
+            .book-now-btn:hover {
+                background: #333;
             }
-            .call-section a:hover {
-                color: #444;
-            }
-            .main-content {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 50px;
-                padding: 50px 15px;
-                background-color: white;
-                box-shadow: 0 0 20px rgba(0,0,0,0.05);
-            }
-            .booking-container {
+            .booking-form-container {
+                flex: 1;
                 background: white;
                 padding: 0;
                 border-radius: 10px;
                 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
                 width: 100%;
-                overflow: hidden;
+                max-width: 400px;
             }
-
             .booking-header {
                 background: black;
                 color: white;
@@ -79,19 +77,16 @@
                 font-size: 18px;
                 font-weight: bold;
             }
-
             .form-container {
                 display: flex;
                 flex-direction: column;
                 padding: 20px;
             }
-
             .input-row {
                 display: flex;
                 justify-content: space-between;
                 gap: 10px;
             }
-
             .inputField {
                 flex: 1;
                 padding: 12px;
@@ -103,7 +98,6 @@
                 background: transparent;
                 outline: none;
             }
-
             .book-btn {
                 background: black;
                 color: white;
@@ -116,48 +110,41 @@
                 margin-top: 15px;
                 transition: 0.3s;
             }
-
             .book-btn:hover {
                 background: #333;
             }
-
-            .additional-content {
-                margin-top: 50px;
-                padding: 20px;
-                background-color: var(--bg-color);
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .additional-content h2 {
-                font-size: 2rem;
-                margin-bottom: 20px;
-            }
-
-            .additional-content p {
+            .message {
+                text-align: center;
+                margin-top: 20px;
                 font-size: 1.2rem;
-                margin-bottom: 10px;
-                line-height: 1.8;
+                color: #d9534f; /* Red color for error messages */
             }
-
-            @media (max-width: 768px) {
-                .main-content {
-                    grid-template-columns: 1fr;
+            .success {
+                color: #5bc0de; /* Light blue for success messages */
+            }
+            @media (max-width: 900px) {
+                .booking-container {
+                    flex-direction: column;
+                    text-align: center;
                     gap: 30px;
                 }
-                .call-section h1 {
-                    font-size: 2.5rem;
+                .left-section, .booking-form-container {
+                    max-width: 90%;
                 }
             }
         </style>
     </head>
     <body>
-
-        <div class="container main-content">
-            <!-- Booking Form -->
-            <div class="booking-container">
+        <div class="booking-container">
+            <div class="left-section">
+                <h1>Best In City</h1>
+                <h1 class="main-heading">TRUSTED CAB SERVICE IN COLOMBO</h1>
+                <p>"Experience the convenience of booking a cab in just a few clicks. Whether you're heading to the airport or need a ride across the city, we offer fast, reliable service with friendly drivers ready to take you wherever you need to go."</p>
+                <button class="book-now-btn" onclick="document.querySelector('.booking-form-container').scrollIntoView({behavior: 'smooth'});">Book Now</button>
+            </div>
+            <div class="booking-form-container">
                 <div class="booking-header">BOOK A CAB</div>
-                <form action="BookingServlet" method="post" class="form-container">
+                <form action="/BookingServlet" method="post" class="form-container">
                     <div class="input-row">
                         <input class="inputField" type="text" name="name" placeholder="Name" required>
                         <input class="inputField" type="text" name="phone" placeholder="Phone" required>
@@ -169,23 +156,9 @@
                     <input class="inputField" type="text" name="vehicle" placeholder="Choose a Vehicle" required>
                     <button type="submit" class="book-btn">BOOK NOW</button>
                 </form>
-            </div>
 
-            <!-- Additional Content Section -->
-            <div class="additional-content">
-                <h2>Why Choose Us?</h2>
-                <p>At Cab Booking Hub, we are dedicated to providing a seamless and luxurious cab booking experience. Our wide range of vehicles ensures that you find the perfect ride for your needs, whether it's a business trip, a family outing, or a special occasion.</p>
-                <p>With our easy-to-use platform, you can book your cab in just a few clicks. Our drivers are professional and reliable, ensuring a safe and comfortable journey every time.</p>
-                <h2>Features</h2>
-                <ul>
-                    <li>Luxury cars available for rent at competitive prices.</li>
-                    <li>Quick and easy booking process.</li>
-                    <li>Safe and secure payment options.</li>
-                    <li>24/7 customer support to assist you with any queries.</li>
-                </ul>
-                <p>Experience the best cab booking service with Cab Booking Hub. Book your ride now and travel in style!</p>
+             
             </div>
         </div>
-
     </body>
 </html>
