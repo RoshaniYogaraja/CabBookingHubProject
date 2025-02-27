@@ -82,6 +82,25 @@
                 background-color: #222;
                 color: white;
             }
+
+            /* Full-Width Map Section */
+            .map-container {
+                width: 100%; /* Full width of the parent container */
+                height: 400px; /* Adjust height as needed */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #333;
+                padding: 0; /* Remove any padding */
+                margin: 0; /* Remove any margins */
+            }
+
+            .map-container iframe {
+                width: 100%; /* Full width of the map container */
+                height: 100%; /* Full height of the map container */
+                border: none;
+            }
+
             @media (max-width: 768px) {
                 .main-footer {
                     grid-template-columns: 1fr;
@@ -129,6 +148,15 @@
                     <div><i class="fas fa-envelope"></i> <a href="mailto:cabbookinghub@gmail.com">cabbookinghub@gmail.com</a></div>
                     <div><i class="fas fa-globe"></i> <a href="#">www.cabbookinghub.com</a></div>
                 </div>
+            </div>
+
+            <!-- Full-Width Map Section -->
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.8911715805434!2d79.8590129147731!3d6.927079895002936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae259285fe90f1b%3A0x9d564937d39b5b74!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1618300123456"
+                    allowfullscreen=""
+                    loading="lazy">
+                </iframe>
             </div>
 
             <div class="footer-bottom">

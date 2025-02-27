@@ -109,7 +109,12 @@
                         <td><%= rs.getString("phone")%></td>
                         <td><%= rs.getString("vehicle_assigned")%></td>
                         <td>
-                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editDriverModal"
+                                    onclick="populateEditForm('<%= rs.getInt("id")%>', '<%= rs.getString("name")%>',
+                                                    '<%= rs.getString("license_number")%>', '<%= rs.getString("phone")%>',
+                                                    '<%= rs.getString("vehicle_assigned")%>')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
                             <a href="DriverServlet?action=delete&driverId=<%= rs.getInt("id")%>" class="btn btn-sm btn-danger">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
@@ -126,6 +131,7 @@
             </table>
         </div>
 
+        <!-- Add Driver Modal -->
         <div class="modal fade" id="addDriverModal" tabindex="-1" aria-labelledby="addDriverModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -158,6 +164,53 @@
                 </div>
             </div>
         </div>
+
+        <!-- Edit Driver Modal -->
+        <div class="modal fade" id="editDriverModal" tabindex="-1" aria-labelledby="editDriverModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="../DriverServlet" method="post">
+                        <input type="hidden" name="action" value="edit">
+                        <input type="hidden" id="editId" name="driverId">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editDriverModalLabel">Edit Driver</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="editName" class="form-label">Driver Name</label>
+                                <input type="text" class="form-control" id="editName" name="driverName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editLicense" class="form-label">License Number</label>
+                                <input type="text" class="form-control" id="editLicense" name="licenseNumber" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editPhone" class="form-label">Phone</label>
+                                <input type="text" class="form-control" id="editPhone" name="phone" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editVehicle" class="form-label">Vehicle Assigned</label>
+                                <input type="text" class="form-control" id="editVehicle" name="vehicleAssigned" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-warning">Update Driver</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function populateEditForm(id, name, license, phone, vehicle) {
+                document.getElementById("editId").value = id;
+                document.getElementById("editName").value = name;
+                document.getElementById("editLicense").value = license;
+                document.getElementById("editPhone").value = phone;
+                document.getElementById("editVehicle").value = vehicle;
+            }
+        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>

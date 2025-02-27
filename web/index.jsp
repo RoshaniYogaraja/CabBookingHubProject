@@ -167,6 +167,7 @@
 
         <!-- Booking Section -->
         <section id="booking" class="py-16 bg-white dark:bg-gray-900">
+            <%--<jsp:forward page="CabServlet" />--%> 
             <jsp:include page="booking.jsp" />
         </section>
 

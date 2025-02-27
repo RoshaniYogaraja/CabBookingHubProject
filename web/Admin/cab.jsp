@@ -17,6 +17,7 @@
             body {
                 display: flex;
                 background-color: #f8f9fa;
+                margin: 0;
             }
             .sidebar {
                 width: 250px;
@@ -31,6 +32,7 @@
                 font-size: 1.5rem;
                 font-weight: bold;
                 color: white;
+                margin-bottom: 20px;
             }
             .sidebar a {
                 padding: 12px 20px;
@@ -47,12 +49,21 @@
             }
             .main-content {
                 margin-left: 250px;
-                padding: 20px;
+                padding: 30px;
                 width: 100%;
             }
             .table th {
                 background-color: var(--primary-color);
                 color: black;
+            }
+            .table td {
+                text-align: center;
+            }
+            .table tbody tr:nth-child(even) {
+                background-color: #f1f1f1;
+            }
+            .table tbody tr:hover {
+                background-color: #e2e2e2;
             }
             .btn-primary {
                 background-color: var(--primary-color);
@@ -62,7 +73,29 @@
                 background-color: #fcd34d;
                 border-color: #fcd34d;
             }
+            .modal-content {
+                padding: 20px;
+            }
+            .modal-header {
+                border-bottom: 2px solid var(--primary-color);
+            }
+            .modal-footer {
+                border-top: 2px solid var(--primary-color);
+            }
+            .modal-body label {
+                font-weight: bold;
+            }
         </style>
+        <script>
+            function populateEditForm(id, type, model, regNum, seating, status) {
+                document.getElementById("editId").value = id;
+                document.getElementById("editType").value = type;
+                document.getElementById("editModel").value = model;
+                document.getElementById("editRegNum").value = regNum;
+                document.getElementById("editSeating").value = seating;
+                document.getElementById("editStatus").value = status;
+            }
+        </script>
     </head>
     <body>
         <div class="sidebar">
@@ -74,22 +107,20 @@
             <a href="booking.jsp"><i class="fas fa-book"></i> Bookings</a>
             <a href="logout.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
-
         <div class="main-content">
-            <h2>Cabs</h2>
-            <div class="mb-3">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCabModal">
-                    <i class="fas fa-plus"></i> Add Cab
-                </button>
-            </div>
-            <table class="table table-striped">
+            <h2 class="mb-4">Cabs</h2>
+            <button class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addCabModal">
+                <i class="fas fa-plus"></i> Add Cab
+            </button>
+
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Type</th>
                         <th>Model</th>
-                        <th>Registration Number</th>
-                        <th>Seating Capacity</th>
+                        <th>Registration</th>
+                        <th>Seating</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -111,8 +142,14 @@
                         <td><%= rs.getInt("seating_capacity")%></td>
                         <td><%= rs.getString("status")%></td>
                         <td>
-                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</button>
-                            <a href="../CabServlet?action=delete&id=<%= rs.getInt("id")%>" class="btn btn-sm btn-danger">
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editCabModal"
+                                    onclick="populateEditForm('<%= rs.getInt("id")%>', '<%= rs.getString("type")%>',
+                                                    '<%= rs.getString("model")%>', '<%= rs.getString("registration_number")%>',
+                                                    '<%= rs.getInt("seating_capacity")%>', '<%= rs.getString("status")%>')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <a href="<%= request.getContextPath()%>/CabServlet?action=delete&id=<%= rs.getInt("id")%>" class="btn btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this cab?');">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
 
@@ -130,43 +167,70 @@
         </div>
 
         <!-- Add Cab Modal -->
-        <div class="modal fade" id="addCabModal" tabindex="-1" aria-labelledby="addCabModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addCabModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addCabModalLabel">Add New Cab</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="../CabServlet" method="post">
-                            <input type="hidden" name="action" value="save">
-                            <div class="mb-3">
-                                <label for="type" class="form-label">Type</label>
-                                <input type="text" class="form-control" id="type" name="type" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="model" class="form-label">Model</label>
-                                <input type="text" class="form-control" id="model" name="model" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="registrationNumber" class="form-label">Registration Number</label>
-                                <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="seatingCapacity" class="form-label">Seating Capacity</label>
-                                <input type="number" class="form-control" id="seatingCapacity" name="seatingCapacity" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status</label>
-                                <select class="form-control" id="status" name="status" required>
-                                    <option value="Available">Available</option>
-                                    <option value="Booked">Booked</option>
-                                    <option value="In Service">In Service</option>
-                                </select>
-                            </div>
+                    <form action="../CabServlet" method="post">
+                        <input type="hidden" name="action" value="save">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add New Cab</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label>Type</label>
+                            <input type="text" class="form-control" name="type" required>
+                            <label>Model</label>
+                            <input type="text" class="form-control" name="model" required>
+                            <label>Registration Number</label>
+                            <input type="text" class="form-control" name="registrationNumber" required>
+                            <label>Seating Capacity</label>
+                            <input type="number" class="form-control" name="seatingCapacity" required>
+                            <label>Status</label>
+                            <select class="form-control" name="status" required>
+                                <option value="Available">Available</option>
+                                <option value="Booked">Booked</option>
+                                <option value="In Service">In Service</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Add Cab</button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Cab Modal -->
+        <div class="modal fade" id="editCabModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="../CabServlet" method="post">
+                        <input type="hidden" name="action" value="edit">
+                        <input type="hidden" id="editId" name="id">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Cab</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label>Type</label>
+                            <input type="text" id="editType" class="form-control" name="type" required>
+                            <label>Model</label>
+                            <input type="text" id="editModel" class="form-control" name="model" required>
+                            <label>Registration Number</label>
+                            <input type="text" id="editRegNum" class="form-control" name="registrationNumber" required>
+                            <label>Seating Capacity</label>
+                            <input type="number" id="editSeating" class="form-control" name="seatingCapacity" required>
+                            <label>Status</label>
+                            <select id="editStatus" class="form-control" name="status" required>
+                                <option value="Available">Available</option>
+                                <option value="Booked">Booked</option>
+                                <option value="In Service">In Service</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-warning">Update Cab</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

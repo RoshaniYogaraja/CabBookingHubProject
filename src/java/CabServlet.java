@@ -114,7 +114,7 @@ public class CabServlet extends HttpServlet {
     }
 
     private void deleteCab(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int id = Integer.parseInt(request.getParameter("id"));  // FIX: Ensure the parameter name matches
+        int id = Integer.parseInt(request.getParameter("id"));
 
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -127,13 +127,13 @@ public class CabServlet extends HttpServlet {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                response.sendRedirect("Admin/cab.jsp?success=deleted"); 
+                response.sendRedirect(request.getContextPath() + "Admin/cab.jsp?success=saved");
             } else {
-                response.sendRedirect("Admin/cab.jsp?error=db_error");
+                response.sendRedirect(request.getContextPath() + "Admin/cab.jsp?error=db_error");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect("Admin/cab.jsp?error=db_error");
+            response.sendRedirect(request.getContextPath() + "Admin/cab.jsp?error=db_error");
         } finally {
             closeConnection(conn, stmt, null);
         }

@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,7 +118,7 @@
                 text-align: center;
                 margin-top: 20px;
                 font-size: 1.2rem;
-                color: #d9534f; /* Red color for error messages */
+                color: #d9534f; /* Red for error messages */
             }
             .success {
                 color: #5bc0de; /* Light blue for success messages */
@@ -144,20 +145,44 @@
             </div>
             <div class="booking-form-container">
                 <div class="booking-header">BOOK A CAB</div>
-                <form action="/BookingServlet" method="post" class="form-container">
+                <form action="ConfirmBookingServlet" method="post" class="form-container">
                     <div class="input-row">
-                        <input class="inputField" type="text" name="name" placeholder="Name" required>
-                        <input class="inputField" type="text" name="phone" placeholder="Phone" required>
+                        <input class="inputField" type="text" name="customerName" placeholder="Name" required>
+                        <input class="inputField" type="text" name="customerPhone" placeholder="Phone" required>
                     </div>
                     <div class="input-row">
-                        <input class="inputField" type="text" name="start" placeholder="Start Location" required>
-                        <input class="inputField" type="text" name="end" placeholder="End Location" required>
+                        <input class="inputField" type="text" name="pickupLocation" placeholder="Start Location" required>
+                        <input class="inputField" type="text" name="dropLocation" placeholder="End Location" required>
                     </div>
-                    <input class="inputField" type="text" name="vehicle" placeholder="Choose a Vehicle" required>
+                    <div class="input-row">
+                        <select class="inputField" name="cab" required>
+                            <option value="" disabled selected>Choose a Cab</option>
+                            <%
+                                List<String> availableCabs = (List<String>) request.getAttribute("availableCabs");
+                                if (availableCabs != null && !availableCabs.isEmpty()) {
+                                    for (String cab : availableCabs) {
+                                        String[] cabDetails = cab.split(",");
+                                        if (cabDetails.length >= 3) {
+                                            String cabId = cabDetails[0];
+                                            String cabType = cabDetails[1];
+                                            String cabModel = cabDetails[2];
+                            %>
+                            <option value="<%= cabId%>"><%= cabType%> <%= cabModel%></option>
+                            <%
+                                    }
+                                }
+                            } else {
+                            %>
+                            <option value="" disabled>No available cabs</option>
+                            <% }%>
+
+
+
+                        </select>
+
+                    </div>
                     <button type="submit" class="book-btn">BOOK NOW</button>
                 </form>
-
-             
             </div>
         </div>
     </body>

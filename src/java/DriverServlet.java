@@ -67,11 +67,11 @@ public class DriverServlet extends HttpServlet {
             if (rowsAffected > 0) {
                 response.sendRedirect("Admin/driver.jsp?success=saved");
             } else {
-                response.sendRedirect("driver.jsp?error=db_error");
+                response.sendRedirect("Admin/driver.jsp?error=db_error");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("driver.jsp?error=db_error");
+            response.sendRedirect("Admin/driver.jsp?error=db_error");
         } finally {
             try {
                 if (stmt != null) {
@@ -110,13 +110,13 @@ public class DriverServlet extends HttpServlet {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                response.sendRedirect("driver.jsp?success=updated");
+                response.sendRedirect("Admin/driver.jsp?success=updated");
             } else {
-                response.sendRedirect("driver.jsp?error=db_error");
+                response.sendRedirect("Admin/driver.jsp?error=db_error");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("driver.jsp?error=db_error");
+            response.sendRedirect("Admin/driver.jsp?error=db_error");
         } finally {
             try {
                 if (stmt != null) {
@@ -147,13 +147,13 @@ public class DriverServlet extends HttpServlet {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                response.sendRedirect("driver.jsp?success=deleted");
+                response.sendRedirect("Admin/driver.jsp?success=deleted");
             } else {
-                response.sendRedirect("driver.jsp?error=db_error");
+                response.sendRedirect("Admin/driver.jsp?error=db_error");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("driver.jsp?error=db_error");
+            response.sendRedirect("Admin/driver.jsp?error=db_error");
         } finally {
             try {
                 if (stmt != null) {
