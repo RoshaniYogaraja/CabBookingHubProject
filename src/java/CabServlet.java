@@ -146,16 +146,19 @@ public class CabServlet extends HttpServlet {
 
         try {
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-            String query = "SELECT * FROM cabs";
+            String query = "SELECT id, type, model, registration_number, seating_capacity FROM cabs WHERE status = 'Available'";
             stmt = conn.prepareStatement(query);
             rs = stmt.executeQuery();
 
-            List<String> cabs = new ArrayList<>();
+            List<String> availableCabs = new ArrayList<>();
             while (rs.next()) {
-                cabs.add(rs.getInt("id") + "," + rs.getString("type") + "," + rs.getString("model") + "," + rs.getString("registration_number") + "," + rs.getInt("seating_capacity") + "," + rs.getString("status"));
+                String cabDetails = rs.getInt("id") + "," + rs.getString("type") + "," + rs.getString("model");
+                availableCabs.add(cabDetails);
+                System.out.println("Retrieved Cab: " + cabDetails); // 🔍 Debugging
             }
-            request.setAttribute("cabs", cabs);
-            request.getRequestDispatcher("cab.jsp").forward(request, response);
+
+            request.setAttribute("availableCabs", availableCabs);
+            request.getRequestDispatcher("booking.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

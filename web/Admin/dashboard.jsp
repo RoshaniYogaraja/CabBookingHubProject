@@ -20,33 +20,67 @@
             }
 
             /* Sidebar */
+            /*            .sidebar {
+                            width: 250px;
+                            height: 100vh;
+                            background: var(--dark-bg);
+                            color: var(--light-text);
+                            padding-top: 20px;
+                            position: fixed;
+                        }
+                        .sidebar h3 {
+                            text-align: center;
+                            font-size: 1.5rem;
+                            font-weight: bold;
+                            color: white;
+                        }
+                        .sidebar a {
+                            padding: 12px 20px;
+                            display: block;
+                            color: var(--light-text);
+                            text-decoration: none;
+                            font-size: 1.1rem;
+                            transition: 0.3s;
+                        }
+                        .sidebar a:hover {
+                            background: var(--primary-color);
+                            color: black;
+                            font-weight: bold;
+                        }*/
             .sidebar {
                 width: 250px;
                 height: 100vh;
-                background: var(--dark-bg);
-                color: var(--light-text);
+                background: #b8860b; /* Dark yellow */
+                color: white;
                 padding-top: 20px;
                 position: fixed;
             }
+
             .sidebar h3 {
                 text-align: center;
                 font-size: 1.5rem;
                 font-weight: bold;
                 color: white;
+                margin-bottom: 20px;
             }
+
             .sidebar a {
                 padding: 12px 20px;
                 display: block;
-                color: var(--light-text);
+                color: white;
                 text-decoration: none;
                 font-size: 1.1rem;
                 transition: 0.3s;
+                border-radius: 20px; /* Rounded edges */
             }
+
             .sidebar a:hover {
-                background: var(--primary-color);
+                background: #ffc727; /* Light yellow */
                 color: black;
                 font-weight: bold;
+                border-radius: 20px; /* Ensure rounded corners */
             }
+
 
             /* Main Content */
             .main-content {

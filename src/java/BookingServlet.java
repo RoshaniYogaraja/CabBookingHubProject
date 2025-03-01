@@ -42,29 +42,22 @@ public class BookingServlet extends HttpServlet {
         ResultSet rs = null;
 
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-            String query = "SELECT id, type, model, registration_number, status FROM cabs WHERE status = 'Available'";
+
+            String query = "SELECT id, type, model FROM cabs WHERE status = 'Available'";
             stmt = conn.prepareStatement(query);
             rs = stmt.executeQuery();
 
             List<String> availableCabs = new ArrayList<>();
             while (rs.next()) {
-                String cabInfo = rs.getInt("id") + "," + rs.getString("type") + ","
-                        + rs.getString("model") + "," + rs.getString("registration_number") + ","
-                        + rs.getString("status");
+                String cabInfo = rs.getInt("id") + "," + rs.getString("type") + "," + rs.getString("model");
                 availableCabs.add(cabInfo);
-            }
-
-            // Debugging Output - Log cabs fetched
-            System.out.println("Available Cabs from DB: " + availableCabs);
-
-            if (availableCabs.isEmpty()) {
-                System.out.println("No available cabs in database.");
             }
 
             request.setAttribute("availableCabs", availableCabs);
             request.getRequestDispatcher("booking.jsp").forward(request, response);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             closeConnection(conn, stmt, rs);
