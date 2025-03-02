@@ -49,17 +49,18 @@
                 margin-bottom: 15px;
             }
             .book-now-btn {
-                background: var(--secondary-color);
-                color: white;
+                background: var(--primary-color);
+                color: var(--secondary-color);
                 padding: 12px 20px;
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
                 font-size: 16px;
+                font-weight: bold;
                 transition: 0.3s;
             }
             .book-now-btn:hover {
-                background: #333;
+                background: #e0b800;
             }
             .booking-form-container {
                 flex: 1;
@@ -71,8 +72,8 @@
                 max-width: 400px;
             }
             .booking-header {
-                background: black;
-                color: white;
+                background: var(--primary-color);
+                color: var(--secondary-color);
                 text-align: center;
                 padding: 15px;
                 font-size: 18px;
@@ -100,19 +101,20 @@
                 outline: none;
             }
             .book-btn {
-                background: black;
-                color: white;
+                background: var(--primary-color);
+                color: var(--secondary-color);
                 padding: 14px;
                 border: none;
                 width: 100%;
                 border-radius: 0;
                 cursor: pointer;
                 font-size: 16px;
+                font-weight: bold;
                 margin-top: 15px;
                 transition: 0.3s;
             }
             .book-btn:hover {
-                background: #333;
+                background: #e0b800;
             }
             .message {
                 text-align: center;
@@ -146,13 +148,14 @@
             <div class="booking-form-container">
                 <div class="booking-header">BOOK A CAB</div>
                 <form action="BookingServlet" method="post" class="form-container">
+                    <input type="hidden" name="action" value="book"> <!-- Add this hidden field -->
                     <div class="input-row">
-                        <input class="inputField" type="text" name="customerName" placeholder="Name" required>
-                        <input class="inputField" type="text" name="customerPhone" placeholder="Phone" required>
+                        <input class="inputField" type="text" name="name" placeholder="Name" required>
+                        <input class="inputField" type="text" name="phone" placeholder="Phone" required>
                     </div>
                     <div class="input-row">
-                        <input class="inputField" type="text" name="pickupLocation" placeholder="Start Location" required>
-                        <input class="inputField" type="text" name="dropLocation" placeholder="End Location" required>
+                        <input class="inputField" type="text" name="start" placeholder="Start Location" required>
+                        <input class="inputField" type="text" name="end" placeholder="End Location" required>
                     </div>
                     <div class="input-row">
                         <select class="inputField" name="cab" required>
@@ -178,11 +181,11 @@
                                     }
                                 }
                             %>
-
                         </select>
                     </div>
                     <button type="submit" class="book-btn">BOOK NOW</button>
                 </form>
+
             </div>
         </div>
     </body>

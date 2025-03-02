@@ -71,10 +71,9 @@
                 background-color: #f9fafb;
             }
             .hero-container {
-                background-image: url('assets/city2.jpg');
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url('assets/city2.jpg');
                 background-size: cover;
                 background-position: center;
-                background-repeat: no-repeat;
                 min-height: 100vh;
                 display: flex;
                 flex-direction: column;
@@ -83,14 +82,6 @@
                 text-align: center;
                 color: white;
                 position: relative;
-            }
-            .hero-overlay {
-                background: rgba(0, 0, 0, 0.6);
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
             }
             .hero-text {
                 position: relative;
@@ -114,6 +105,12 @@
                 text-decoration: none;
                 font-weight: bold;
             }
+            .hero-image {
+                position: absolute;
+                bottom: -20px;
+                width: 50%;
+                max-width: 700px;
+            }
         </style>
     </head>
     <body class="transition-colors duration-300 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
@@ -124,22 +121,20 @@
                     <a href="index.jsp" class="text-3xl font-bold">
                         <span class="text-gray-900 dark:text-white">Cab</span>
                         <span class="text-primary">Booking</span>
-                        <span class="text-primary">Hub</span>
                     </a>
                     <div class="flex items-center gap-8 ml-auto"> 
                         <ul class="flex items-center gap-8"> 
-                            <li><a href="index.jsp" class="text-2xl font-medium text-gray-900 dark:text-white hover:text-primary transition-colors duration-300">Home</a></li> <!-- Increased font size and added hover effect -->
+                            <li><a href="index.jsp" class="text-2xl font-medium text-gray-900 dark:text-white hover:text-primary transition-colors duration-300">Home</a></li>
                             <li><a href="#aboutus" class="text-2xl font-medium text-gray-900 dark:text-white hover:text-primary transition-colors duration-300">About Us</a></li>
                             <li><a href="#booking" class="text-2xl font-medium text-gray-900 dark:text-white hover:text-primary transition-colors duration-300">Booking</a></li>
                             <li><a href="#contactus" class="text-2xl font-medium text-gray-900 dark:text-white hover:text-primary transition-colors duration-300">Contact Us</a></li>
                         </ul>
-                        <a href="login.jsp" class="bg-primary text-black px-8 py-3 rounded-full text-xl font-medium">Login</a> <!-- Increased padding and font size for Login button -->
-                        <!-- Theme Toggle Button -->
+                        <a href="login.jsp" class="bg-primary text-black px-8 py-3 rounded-full text-xl font-medium">Login</a>
                         <button onclick="toggleTheme()" class="p-3 text-gray-900 dark:text-white">
-                            <svg id="lightIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg id="lightIcon" class="h-8 w-8 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
-                            <svg id="darkIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg id="darkIcon" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                             </svg>
                         </button>
@@ -148,16 +143,14 @@
             </div>
         </nav>
 
-
-
         <!-- Hero Section -->
         <div class="hero-container">
-            <div class="hero-overlay"></div>
             <div class="hero-text" data-aos="fade-up">
                 <h1>Welcome to Cab Booking Hub</h1>
                 <p>Your trusted partner for cab bookings!</p>
                 <a href="#booking">Book Now</a>
             </div>
+            <img src="assets/yellow-cab.png" alt="Taxi Image" class="hero-image" data-aos="zoom-in">
         </div>
 
         <!-- About Us Section -->
@@ -167,7 +160,6 @@
 
         <!-- Booking Section -->
         <section id="booking" class="py-16 bg-white dark:bg-gray-900">
-            <%--<jsp:forward page="CabServlet" />--%> 
             <jsp:include page="booking.jsp" />
         </section>
 
@@ -182,12 +174,6 @@
         </section>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-        <script>
-                            AOS.init({
-                                duration: 800,
-                                offset: 120,
-                                once: true
-                            });
-        </script>
+        <script>AOS.init({duration: 800, offset: 120, once: true});</script>
     </body>
 </html>
