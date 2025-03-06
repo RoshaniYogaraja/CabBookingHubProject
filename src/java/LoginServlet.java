@@ -1,3 +1,4 @@
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +11,10 @@ import java.sql.*;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3308/cab_booking"; 
-    private static final String JDBC_USER = "root"; 
-    private static final String JDBC_PASSWORD = ""; 
+
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3308/cab_booking";
+    private static final String JDBC_USER = "root";
+    private static final String JDBC_PASSWORD = "";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -20,49 +22,54 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        try {
-            // Load MySQL JDBC Driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            // Establish connection
-            Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+        // Hardcoded credentials for admin (for testing purposes)
+        String adminEmail = "admin@gmail.com";
+        String adminPassword = "admin";
 
-            // Prepare SQL query
-            String query = "SELECT * FROM users WHERE email = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, email);
-            stmt.setString(2, password);
+        if (email.equals(adminEmail) && password.equals(adminPassword)) {
+            // Admin login
+            HttpSession session = request.getSession();
+            session.setAttribute("user", email);
+            session.setAttribute("role", "admin");
+            response.sendRedirect("Admin/dashboard.jsp");
+        } else {
+            // Normal user login (Database check)
+            try {
+                // Load MySQL JDBC Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Execute query
-            ResultSet rs = stmt.executeQuery();
+                // Establish connection
+                Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
-            if (rs.next()) {
-                // Create a session for the user
-                HttpSession session = request.getSession();
-                session.setAttribute("user", email);
+                // Prepare SQL query for checking the user in the database
+                String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+                PreparedStatement stmt = conn.prepareStatement(query);
+                stmt.setString(1, email);
+                stmt.setString(2, password);
 
-                // Redirect based on the user's role
-                String role = rs.getString("role");
-                if ("admin".equals(role)) {
-                    session.setAttribute("role", "admin");
-                    response.sendRedirect("dashboard.jsp");
-                } else {
+                // Execute query
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    // Create a session for the user
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", email);
                     session.setAttribute("role", "user");
-                    response.sendRedirect("home.jsp");
+                    response.sendRedirect("index.jsp");
+                } else {
+                    // Redirect to login page with error
+                    response.sendRedirect("login.jsp?error=1");
                 }
-            } else {
-                // Redirect to login page with error
+
+                // Close resources
+                rs.close();
+                stmt.close();
+                conn.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
                 response.sendRedirect("login.jsp?error=1");
             }
-
-            // Close resources
-            rs.close();
-            stmt.close();
-            conn.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("login.jsp?error=1");
         }
     }
 }

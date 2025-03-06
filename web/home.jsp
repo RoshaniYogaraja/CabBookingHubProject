@@ -10,7 +10,7 @@
             body {
                 margin: 0;
                 padding: 0;
-                background-image: url('assets/city1.jpg'); /* Ensure correct path */
+                background-image: url('assets/city2.jpg'); 
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
