@@ -1,4 +1,3 @@
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -6,13 +5,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/BookingServlet")
 public class BookingServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
     private static final String JDBC_URL = "jdbc:mysql://localhost:3308/cab_booking";
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "";
@@ -29,105 +25,39 @@ public class BookingServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        getAvailableCabs(request, response);
-    }
-
-    private void getAvailableCabs(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-
-            String query = "SELECT id, type, model FROM cabs WHERE status = 'Available'";
-            stmt = conn.prepareStatement(query);
-            rs = stmt.executeQuery();
-
-            List<String> availableCabs = new ArrayList<>();
-            while (rs.next()) {
-                String cabInfo = rs.getInt("id") + "," + rs.getString("type") + "," + rs.getString("model");
-                availableCabs.add(cabInfo);
-            }
-
-            request.setAttribute("availableCabs", availableCabs);
-            request.getRequestDispatcher("booking.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(conn, stmt, rs);
-        }
-    }
-
     private void bookCab(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String startLocation = request.getParameter("start");
         String endLocation = request.getParameter("end");
-        String cabId = request.getParameter("cab");
+        String cabType = request.getParameter("cab");
 
         Connection conn = null;
         PreparedStatement stmt = null;
-        PreparedStatement updateStmt = null;
 
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");  // Explicitly load MySQL JDBC driver
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-            conn.setAutoCommit(false); // Start transaction
+            String query = "INSERT INTO bookings (customer_name, phone, pickup_location, dropoff_location, cab_type, booking_status) VALUES (?, ?, ?, ?, ?, 'Confirmed')";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, name);
+            stmt.setString(2, phone);
+            stmt.setString(3, startLocation);
+            stmt.setString(4, endLocation);
+            stmt.setString(5, cabType);
 
-            // Check if cab is still available before booking
-            String checkQuery = "SELECT status FROM cabs WHERE id = ?";
-            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
-            checkStmt.setString(1, cabId);
-            ResultSet rs = checkStmt.executeQuery();
+            int rowsInserted = stmt.executeUpdate();
 
-            if (rs.next() && "Available".equals(rs.getString("status"))) {
-                // Insert booking record
-                String insertQuery = "INSERT INTO bookings (customer_name, phone, pickup_location, dropoff_location, cab_id, booking_status) VALUES (?, ?, ?, ?, ?, 'Confirmed')";
-                stmt = conn.prepareStatement(insertQuery);
-                stmt.setString(1, name);
-                stmt.setString(2, phone);
-                stmt.setString(3, startLocation);
-                stmt.setString(4, endLocation);
-                stmt.setString(5, cabId);
-
-                int rowsInserted = stmt.executeUpdate();
-
-                if (rowsInserted > 0) {
-                    // Update the cab status to 'Booked'
-                    String updateQuery = "UPDATE cabs SET status = 'Booked' WHERE id = ?";
-                    updateStmt = conn.prepareStatement(updateQuery);
-                    updateStmt.setString(1, cabId);
-                    updateStmt.executeUpdate();
-
-                    conn.commit(); // Commit transaction
-                    response.sendRedirect("bookingSuccess.jsp");
-                } else {
-                    conn.rollback(); // Rollback in case of failure
-                    response.sendRedirect("bookingFailed.jsp?error=db_error");
-                }
+            if (rowsInserted > 0) {
+                response.sendRedirect("confirmation.jsp");
             } else {
-                response.sendRedirect("bookingFailed.jsp?error=cab_not_available");
+                response.sendRedirect("bookingFailed.jsp?error=db_error");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback(); // Rollback transaction on error
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();  // This will print the error to the server log (check your server logs)
             response.sendRedirect("bookingFailed.jsp?error=db_error");
-        } finally {
-            closeConnection(null, stmt, null);
-            closeConnection(null, updateStmt, null);
-            closeConnection(conn, null, null);
         }
+
     }
 
     private void closeConnection(Connection conn, PreparedStatement stmt, ResultSet rs) {

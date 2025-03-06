@@ -1,4 +1,3 @@
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,25 +115,6 @@
             .book-btn:hover {
                 background: #e0b800;
             }
-            .message {
-                text-align: center;
-                margin-top: 20px;
-                font-size: 1.2rem;
-                color: #d9534f;
-            }
-            .success {
-                color: #5bc0de;
-            }
-            @media (max-width: 900px) {
-                .booking-container {
-                    flex-direction: column;
-                    text-align: center;
-                    gap: 30px;
-                }
-                .left-section, .booking-form-container {
-                    max-width: 90%;
-                }
-            }
         </style>
     </head>
     <body>
@@ -147,8 +127,9 @@
             </div>
             <div class="booking-form-container">
                 <div class="booking-header">BOOK A CAB</div>
+
                 <form action="BookingServlet" method="post" class="form-container">
-                    <input type="hidden" name="action" value="book"> <!-- Add this hidden field -->
+                    <input type="hidden" name="action" value="book"> 
                     <div class="input-row">
                         <input class="inputField" type="text" name="name" placeholder="Name" required>
                         <input class="inputField" type="text" name="phone" placeholder="Phone" required>
@@ -157,32 +138,7 @@
                         <input class="inputField" type="text" name="start" placeholder="Start Location" required>
                         <input class="inputField" type="text" name="end" placeholder="End Location" required>
                     </div>
-                    <div class="input-row">
-                        <select class="inputField" name="cab" required>
-                            <option value="" disabled selected>Choose a Cab</option>
-                            <%
-                                List<String> availableCabs = (List<String>) request.getAttribute("availableCabs");
-
-                                if (availableCabs == null || availableCabs.isEmpty()) {
-                            %>
-                            <option value="" disabled>No available cabs</option>
-                            <%
-                            } else {
-                                for (String cab : availableCabs) {
-                                    String[] cabDetails = cab.split(",");
-                                    if (cabDetails.length >= 3) {
-                                        String cabId = cabDetails[0];
-                                        String cabType = cabDetails[1];
-                                        String cabModel = cabDetails[2];
-                            %>
-                            <option value="<%= cabId%>"><%= cabType%> - <%= cabModel%></option>
-                            <%
-                                        }
-                                    }
-                                }
-                            %>
-                        </select>
-                    </div>
+                    <input class="inputField" type="text" name="cab" placeholder="Enter Cab Type (e.g., Sedan, SUV)" required>
                     <button type="submit" class="book-btn">BOOK NOW</button>
                 </form>
 
