@@ -167,6 +167,10 @@
         <section id="contactus" class="py-16 bg-gray-100 dark:bg-gray-800">
             <jsp:include page="contactus.jsp" />
         </section>
+        
+         <section id="contactus" class="py-16 bg-gray-100 dark:bg-gray-800">
+            <jsp:include page="review.jsp" />
+        </section>
 
         <!-- Footer -->
         <section class="py-16">
