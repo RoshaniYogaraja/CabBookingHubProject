@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,7 +11,7 @@
         <style>
             :root {
                 --primary-color: #ffc727;
-                --dark-bg: #ffc727;
+                --dark-bg: #b8860b;
                 --light-text: black;
             }
 
@@ -19,38 +20,10 @@
                 background-color: #f8f9fa;
             }
 
-            /* Sidebar */
-            /*        .sidebar {
-                        width: 250px;
-                        height: 100vh;
-                        background: var(--dark-bg);
-                        color: var(--light-text);
-                        padding-top: 20px;
-                        position: fixed;
-                    }
-                    .sidebar h3 {
-                        text-align: center;
-                        font-size: 1.5rem;
-                        font-weight: bold;
-                        color: white;
-                    }
-                    .sidebar a {
-                        padding: 12px 20px;
-                        display: block;
-                        color: var(--light-text);
-                        text-decoration: none;
-                        font-size: 1.1rem;
-                        transition: 0.3s;
-                    }
-                    .sidebar a:hover {
-                        background: var(--primary-color);
-                        color: black;
-                        font-weight: bold;
-                    }*/
             .sidebar {
                 width: 250px;
                 height: 100vh;
-                background: #b8860b; /* Dark yellow */
+                background: var(--dark-bg);
                 color: white;
                 padding-top: 20px;
                 position: fixed;
@@ -71,25 +44,22 @@
                 text-decoration: none;
                 font-size: 1.1rem;
                 transition: 0.3s;
-                border-radius: 20px; /* Rounded edges */
+                border-radius: 20px;
             }
 
             .sidebar a:hover {
-                background: #ffc727; /* Light yellow */
+                background: var(--primary-color);
                 color: black;
                 font-weight: bold;
-                border-radius: 20px; /* Ensure rounded corners */
+                border-radius: 20px;
             }
 
-
-            /* Main Content */
             .main-content {
                 margin-left: 250px;
                 padding: 20px;
                 width: 100%;
             }
 
-            /* Table */
             .table th {
                 background-color: var(--primary-color);
                 color: black;
@@ -106,7 +76,6 @@
     </head>
     <body>
 
-        <!-- Sidebar -->
         <div class="sidebar">
             <h3>Cab Booking Hub Admin Panel</h3>
             <a href="dashboard.jsp"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
@@ -117,13 +86,10 @@
             <a href="logout.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
 
-        <!-- Main Content -->
         <div class="main-content">
             <h2>Users</h2>
             <div class="mb-3">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                    <i class="fas fa-plus"></i> Add User
-                </button>
+
             </div>
             <table class="table table-striped">
                 <thead>
@@ -131,63 +97,31 @@
                         <th>#</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
+                        <th>Role</th>
+                        <th>Created At</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Replace with dynamic rows -->
+                    <%
+                        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3308/cab_booking", "root", ""); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT * FROM users")) {
+
+                            while (rs.next()) {
+                    %>
                     <tr>
-                        <td>1</td>
-                        <td>John Doe</td>
-                        <td>john.doe@example.com</td>
-                        <td>123-456-7890</td>
-                        <td>
-                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
-                        </td>
+                        <td><%= rs.getInt("id")%></td>
+                        <td><%= rs.getString("full_name")%></td>
+                        <td><%= rs.getString("email")%></td>
+                        <td><%= rs.getString("role")%></td>
+                        <td><%= rs.getString("created_at")%></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jane Smith</td>
-                        <td>jane.smith@example.com</td>
-                        <td>987-654-3210</td>
-                        <td>
-                            <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
-                        </td>
-                    </tr>
+                    <%
+                            }
+                        } catch (Exception e) {
+                            out.println("<tr><td colspan='6' class='text-danger'>Error: " + e.getMessage() + "</td></tr>");
+                        }
+                    %>
                 </tbody>
             </table>
-        </div>
-
-        <!-- Add User Modal -->
-        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="addUserServlet" method="post">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input type="text" class="form-control" id="phone" name="phone" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add User</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

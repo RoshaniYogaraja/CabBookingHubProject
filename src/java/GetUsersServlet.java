@@ -1,4 +1,3 @@
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,7 +7,6 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import models.User; 
 
 @WebServlet("/GetUsersServlet")
 public class GetUsersServlet extends HttpServlet {
@@ -20,40 +18,49 @@ public class GetUsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<User> users = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-            String query = "SELECT id, full_name, email, role, created_at FROM users";
-            stmt = conn.prepareStatement(query);
-            rs = stmt.executeQuery();
+        
+        try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users");
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setFullName(rs.getString("full_name"));
-                user.setEmail(rs.getString("email"));
-                user.setRole(rs.getString("role"));
-                user.setCreatedAt(rs.getString("created_at"));
+                User user = new User(
+                        rs.getInt("id"),
+                        rs.getString("full_name"),
+                        rs.getString("email"),
+                        rs.getString("role"),
+                        rs.getString("created_at")
+                );
                 users.add(user);
             }
 
             request.setAttribute("users", users);
             request.getRequestDispatcher("Admin/user.jsp").forward(request, response);
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            response.sendRedirect("error.jsp?error=db_error");
         }
+    }
+
+    public static class User {
+        private int id;
+        private String fullName;
+        private String email;
+        private String role;
+        private String createdAt;
+
+        public User(int id, String fullName, String email, String role, String createdAt) {
+            this.id = id;
+            this.fullName = fullName;
+            this.email = email;
+            this.role = role;
+            this.createdAt = createdAt;
+        }
+
+        public int getId() { return id; }
+        public String getFullName() { return fullName; }
+        public String getEmail() { return email; }
+        public String getRole() { return role; }
+        public String getCreatedAt() { return createdAt; }
     }
 }
