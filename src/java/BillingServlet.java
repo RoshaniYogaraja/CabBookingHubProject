@@ -112,10 +112,12 @@ public class BillingServlet extends HttpServlet {
 
     private double calculateFare(String cabType) {
         switch (cabType.toLowerCase()) {
-            case "sedan":
+            case "car":
                 return 1000;
-            case "suv":
+            case "auto":
                 return 1500;
+                case "van":
+                return 2000;
             default:
                 return 1200;
         }

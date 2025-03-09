@@ -107,34 +107,26 @@ public class SignupServlet extends HttpServlet {
         PreparedStatement stmt = null;
 
         try {
-            // Load MySQL JDBC Driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Establish connection
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
-            // Insert user data with a default role
             String query = "INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, ?)";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, fullName);
             stmt.setString(2, email);
             stmt.setString(3, password);
-            stmt.setString(4, "user"); // Default role
+            stmt.setString(4, "user"); 
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                // Redirect to login page with a success message
                 response.sendRedirect("login.jsp?signup=success");
             } else {
-                // Redirect to signup page with an error message
                 response.sendRedirect("signup.jsp?error=db_error");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // Redirect to signup page with an error message
             response.sendRedirect("signup.jsp?error=db_error");
         } finally {
-            // Close resources
             try {
                 if (stmt != null) {
                     stmt.close();

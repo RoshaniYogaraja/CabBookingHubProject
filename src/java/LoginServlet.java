@@ -22,7 +22,6 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Hardcoded credentials for admin (for testing purposes)
         String adminEmail = "admin@gmail.com";
         String adminPassword = "admin";
 
@@ -33,12 +32,9 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("role", "admin");
             response.sendRedirect("Admin/dashboard.jsp");
         } else {
-            // Normal user login (Database check)
             try {
                 // Load MySQL JDBC Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
-
-                // Establish connection
                 Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
                 // Prepare SQL query for checking the user in the database
@@ -47,7 +43,6 @@ public class LoginServlet extends HttpServlet {
                 stmt.setString(1, email);
                 stmt.setString(2, password);
 
-                // Execute query
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
@@ -60,8 +55,6 @@ public class LoginServlet extends HttpServlet {
                     // Redirect to login page with error
                     response.sendRedirect("login.jsp?error=1");
                 }
-
-                // Close resources
                 rs.close();
                 stmt.close();
                 conn.close();

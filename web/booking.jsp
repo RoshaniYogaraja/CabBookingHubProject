@@ -138,7 +138,7 @@
                         <input class="inputField" type="text" name="start" placeholder="Start Location" required>
                         <input class="inputField" type="text" name="end" placeholder="End Location" required>
                     </div>
-                    <input class="inputField" type="text" name="cab" placeholder="Enter Cab Type (e.g., Sedan, SUV)" required>
+                    <input class="inputField" type="text" name="cab" placeholder="Enter Cab Type" required>
                     <button type="submit" class="book-btn">BOOK NOW</button>
                 </form>
 
