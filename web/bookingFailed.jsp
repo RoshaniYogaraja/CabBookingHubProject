@@ -1,41 +1,60 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <html>
     <head>
         <title>Booking Failed</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <style>
             body {
                 font-family: Arial, sans-serif;
                 background-color: #f9f9f9;
                 color: #333;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .container {
+                max-width: 600px;
+                padding: 30px;
+                background: #fff;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
                 text-align: center;
-                padding: 50px;
+            }
+            .failed {
+                font-size: 24px;
+                font-weight: bold;
+                color: #d9534f;
+                margin-bottom: 15px;
             }
             .message {
-                font-size: 1.5rem;
-                color: #d9534f;
+                font-size: 18px;
+                color: #555;
+                margin-bottom: 20px;
             }
             .retry-button {
-                background-color: #ffc727;
-                color: #000;
-                padding: 10px 20px;
+                display: inline-block;
+                margin-top: 20px;
+                padding: 12px 25px;
+                background-color: #d9534f;
+                color: #fff;
+                text-decoration: none;
                 font-size: 16px;
-                border: none;
                 border-radius: 5px;
-                cursor: pointer;
+                transition: 0.3s;
             }
             .retry-button:hover {
-                background-color: #e0b800;
+                background-color: #c9302c;
             }
         </style>
     </head>
     <body>
-        <h1>Booking Failed</h1>
-        <p class="message">
-            <strong>Something went wrong with your booking.</strong>
-        </p>
-        <p>Please try again later or contact support for assistance.</p>
-        <button class="retry-button" onclick="window.history.back();">Go Back</button>
+        <div class="container">
+            <div class="failed">❌ Booking Failed ❌</div>
+            <p class="message">Oops! Something went wrong with your booking. 😞<br>Please try again or contact support for assistance.</p>
+
+            <a href="booking.jsp" class="retry-button">Try Again</a>
+        </div>
     </body>
 </html>

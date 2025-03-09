@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Bookings - Admin Dashboard</title>
+        <title>Billing - Admin Dashboard</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <style>
@@ -72,7 +72,7 @@
         </div>
 
         <div class="main-content">
-            <h2>Bookings</h2>
+            <h2>Billing Details</h2>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -81,17 +81,24 @@
                         <th>Phone Number</th>
                         <th>Pickup Location</th>
                         <th>Dropoff Location</th>
-                        <th>Vehicle</th>
-                        <th>Status</th>
+                        <th>Cab Type</th>
+                        <th>Fare</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
                         try {
-                            Class.forName("com.mysql.cj.jdbc.Driver"); // Ensure you have this driver
+                            Class.forName("com.mysql.cj.jdbc.Driver"); // Ensure MySQL Driver is loaded
                             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3308/cab_booking", "root", "");
                             Statement stmt = conn.createStatement();
-                            ResultSet rs = stmt.executeQuery("SELECT * FROM bookings");
+
+                            // Join bookings with billing to get the fare details
+                            String sql = "SELECT b.booking_id, b.customer_name, b.phone, b.pickup_location, "
+                                    + "b.dropoff_location, b.cab_type, b.booking_status, bill.fare "
+                                    + "FROM bookings b "
+                                    + "LEFT JOIN billing bill ON b.booking_id = bill.booking_id";
+
+                            ResultSet rs = stmt.executeQuery(sql);
 
                             while (rs.next()) {
                     %>
@@ -102,7 +109,7 @@
                         <td><%= rs.getString("pickup_location")%></td>
                         <td><%= rs.getString("dropoff_location")%></td>
                         <td><%= rs.getString("cab_type")%></td>
-                        <td><%= rs.getString("booking_status")%></td>
+                        <td><%= String.format("%.2f", rs.getDouble("fare"))%></td>
                     </tr>
                     <%
                             }
@@ -114,6 +121,7 @@
                         }
                     %>
                 </tbody>
+
             </table>
         </div>
 

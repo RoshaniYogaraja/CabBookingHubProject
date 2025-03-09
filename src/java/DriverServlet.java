@@ -172,7 +172,6 @@ public class DriverServlet extends HttpServlet {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
@@ -183,7 +182,11 @@ public class DriverServlet extends HttpServlet {
 
             List<String> drivers = new ArrayList<>();
             while (rs.next()) {
-                drivers.add(rs.getInt("id") + "," + rs.getString("name") + "," + rs.getString("license_number") + "," + rs.getString("phone") + "," + rs.getString("vehicle_assigned"));
+                drivers.add(rs.getInt("id") + ","
+                        + rs.getString("name") + ","
+                        + rs.getString("license_number") + ","
+                        + rs.getString("phone") + ","
+                        + rs.getString("vehicle_assigned"));
             }
             response.setContentType("text/plain");
             response.getWriter().write(String.join("\n", drivers));

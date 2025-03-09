@@ -161,7 +161,13 @@ public class BookingServlet extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
-            String query = "INSERT INTO bookings (customer_name, phone, pickup_location, dropoff_location, cab_type, booking_status) VALUES (?, ?, ?, ?, ?, 'Confirmed')";
+            String query = "INSERT INTO bookings ("
+                    + "customer_name, "
+                    + "phone, "
+                    + "pickup_location, "
+                    + "dropoff_location, "
+                    + "cab_type, "
+                    + "booking_status) VALUES (?, ?, ?, ?, ?, 'Confirmed')";
             stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, name);
             stmt.setString(2, phone);
@@ -208,7 +214,15 @@ public class BookingServlet extends HttpServlet {
         private String cabType;
         private String status;
 
-        public Booking(int id, String customerName, String phone, String pickupLocation, String dropoffLocation, String cabType, String status) {
+        public Booking(
+                int id, 
+                String customerName, 
+                String phone, 
+                String pickupLocation, 
+                String dropoffLocation, 
+                String cabType, 
+                String status
+        ) {
             this.id = id;
             this.customerName = customerName;
             this.phone = phone;
