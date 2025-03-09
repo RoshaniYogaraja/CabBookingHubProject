@@ -18,33 +18,6 @@
                 display: flex;
                 background-color: #f8f9fa;
             }
-            /*            .sidebar {
-                            width: 250px;
-                            height: 100vh;
-                            background: var(--dark-bg);
-                            color: var(--light-text);
-                            padding-top: 20px;
-                            position: fixed;
-                        }
-                        .sidebar h3 {
-                            text-align: center;
-                            font-size: 1.5rem;
-                            font-weight: bold;
-                            color: white;
-                        }
-                        .sidebar a {
-                            padding: 12px 20px;
-                            display: block;
-                            color: var(--light-text);
-                            text-decoration: none;
-                            font-size: 1.1rem;
-                            transition: 0.3s;
-                        }
-                        .sidebar a:hover {
-                            background: var(--primary-color);
-                            color: black;
-                            font-weight: bold;
-                        }*/
             .sidebar {
                 width: 250px;
                 height: 100vh;
@@ -106,6 +79,7 @@
             <a href="driver.jsp"><i class="fas fa-user-tie"></i> Drivers</a>
             <a href="cab.jsp"><i class="fas fa-taxi"></i> Cabs</a>
             <a href="booking.jsp"><i class="fas fa-book"></i> Bookings</a>
+            <a href="billing.jsp"><i class="fas fa-book"></i> Billing</a>
             <a href="logout.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
 

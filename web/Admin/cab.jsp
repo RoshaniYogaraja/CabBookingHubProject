@@ -111,6 +111,7 @@
             <a href="driver.jsp"><i class="fas fa-user-tie"></i> Drivers</a>
             <a href="cab.jsp"><i class="fas fa-taxi"></i> Cabs</a>
             <a href="booking.jsp"><i class="fas fa-book"></i> Bookings</a>
+            <a href="billing.jsp"><i class="fas fa-book"></i> Billing</a>
             <a href="logout.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
         <div class="main-content">
