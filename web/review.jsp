@@ -94,7 +94,7 @@
 </head>
 <body>
     <div class="review-container">
-        <h2>Google Reviews</h2>
+        <h2>Customer Reviews</h2>
         
         <div class="review-wrapper">
             <div class="review active">
@@ -105,7 +105,7 @@
                 </div>
             </div>
             <div class="review active">
-                <p>"Excellent service! The vehicle was clean, and the driver was professional. Will definitely book again for my next trip."</p>
+                <p>"Excellent service! The vehicle was clean, and the driver was professional. Will definitely book again for my next trip. Ride The Journey"</p>
                 <div class="user-info">
                     <div class="user-image">B</div>
                     <div class="user-name">Brian Smith</div>
@@ -119,7 +119,7 @@
                 </div>
             </div>
             <div class="review">
-                <p>"Great experience from start to finish! Booking was simple, and the ride was comfortable. Will recommend to my friends."</p>
+                <p>"Great experience from start to finish! Booking was simple, and the ride was comfortable. Will recommend to my friends. Best Ride.... Feel Happy"</p>
                 <div class="user-info">
                     <div class="user-image">D</div>
                     <div class="user-name">David Miller</div>
