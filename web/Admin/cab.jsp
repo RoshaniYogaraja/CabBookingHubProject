@@ -155,10 +155,11 @@
                                                     '<%= rs.getInt("seating_capacity")%>', '<%= rs.getString("status")%>')">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
-                            <a href="<%= request.getContextPath()%>/CabServlet?action=delete&id=<%= rs.getInt("id")%>" class="btn btn-danger"
+<a href="<%= request.getContextPath()%>/CabServlet?action=delete&id=<%= rs.getInt("id")%>"
                                onclick="return confirm('Are you sure you want to delete this cab?');">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
+                               
 
                         </td>
                     </tr>

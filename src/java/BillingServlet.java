@@ -37,7 +37,14 @@ public class BillingServlet extends HttpServlet {
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
             // Fetch booking details
-            String query = "SELECT customer_name, phone, pickup_location, dropoff_location, cab_type, booking_status FROM bookings WHERE booking_id = ?";
+            String query = 
+                    "SELECT customer_name, "
+                    + "phone, "
+                    + "pickup_location, "
+                    + "dropoff_location, "
+                    + "cab_type, "
+                    + "booking_status "
+                    + "FROM bookings WHERE booking_id = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, bookingId);
             rs = stmt.executeQuery();
@@ -79,14 +86,30 @@ public class BillingServlet extends HttpServlet {
         }
     }
 
-    private void saveBillToDatabase(String bookingId, String customerName, String phone, String pickup, String dropoff, String cabType, String status, double fare) {
+    private void saveBillToDatabase(
+            String bookingId, 
+            String customerName, 
+            String phone, 
+            String pickup, 
+            String dropoff, 
+            String cabType, 
+            String status, 
+            double fare) {
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
-            String insertQuery = "INSERT INTO billing (booking_id, customer_name, phone, pickup_location, dropoff_location, cab_type, booking_status, fare) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO billing ("
+                    + "booking_id, "
+                    + "customer_name, "
+                    + "phone, "
+                    + "pickup_location, "
+                    + "dropoff_location, "
+                    + "cab_type, "
+                    + "booking_status, "
+                    + "fare) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(insertQuery);
             stmt.setString(1, bookingId);
             stmt.setString(2, customerName);
