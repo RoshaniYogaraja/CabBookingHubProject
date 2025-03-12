@@ -28,6 +28,8 @@ public class GetUsersServlet extends HttpServlet {
                         rs.getInt("id"),
                         rs.getString("full_name"),
                         rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("phoneNo"),
                         rs.getString("role"),
                         rs.getString("created_at")
                 );
@@ -46,13 +48,17 @@ public class GetUsersServlet extends HttpServlet {
         private int id;
         private String fullName;
         private String email;
+        private String address;
+        private String phoneNo;
         private String role;
         private String createdAt;
 
-        public User(int id, String fullName, String email, String role, String createdAt) {
+        public User(int id, String fullName, String email, String address,String phoneNo, String role, String createdAt) {
             this.id = id;
             this.fullName = fullName;
             this.email = email;
+            this.address = address;
+            this.phoneNo = phoneNo;
             this.role = role;
             this.createdAt = createdAt;
         }
@@ -60,6 +66,8 @@ public class GetUsersServlet extends HttpServlet {
         public int getId() { return id; }
         public String getFullName() { return fullName; }
         public String getEmail() { return email; }
+        public String getAddress() { return address; }
+        public String getPhoneNo() { return phoneNo; }
         public String getRole() { return role; }
         public String getCreatedAt() { return createdAt; }
     }

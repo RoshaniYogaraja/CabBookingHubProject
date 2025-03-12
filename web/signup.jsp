@@ -35,48 +35,65 @@
         <jsp:include page="header.jsp" />
 
         <!-- Centered Sign up Form -->
+        <!-- Centered Sign up Form -->
         <div class="flex justify-center items-center flex-grow">
-            <div class="bg-white shadow-lg rounded-2xl p-6 w-96">
+            <div class="bg-white shadow-lg rounded-2xl p-6 w-96 md:w-[32rem]">
                 <h2 class="text-xl font-bold text-center text-black">Signup</h2>
                 <p class="text-gray-500 text-center mb-4 text-sm">Create an account to get started</p>
 
                 <form action="SignupServlet" method="post">
-                    <!-- Full Name -->
-                    <div class="mb-3">
-                        <label class="block text-black font-medium text-sm">Full Name</label>
-                        <input type="text" name="fullName" placeholder="Enter your name" required
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
-                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block text-black font-medium text-sm">Full Name</label>
+                            <input type="text" name="fullName" placeholder="Enter your name" required
+                                   class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
+                        </div>
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label class="block text-black font-medium text-sm">Email</label>
-                        <input type="email" name="email" placeholder="Enter your email" required
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
-                    </div>
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-black font-medium text-sm">Email</label>
+                            <input type="email" name="email" placeholder="Enter your email" required
+                                   class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
+                        </div>
 
-                    <!-- Password -->
-                    <div class="mb-3 relative">
-                        <label class="block text-black font-medium text-sm">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Enter your password" required
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
-                        <button type="button" class="absolute right-3 top-8 text-gray-500" onclick="togglePassword('password', 'toggleIcon1')">
-                            <i id="toggleIcon1" class="fa-solid fa-eye-slash"></i>
-                        </button>
-                    </div>
+                        <!-- Address -->
+                        <div>
+                            <label class="block text-black font-medium text-sm">Address</label>
+                            <input type="text" name="address" placeholder="Enter your address" required
+                                   class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
+                        </div>
 
-                    <!-- Confirm Password -->
-                    <div class="mb-3 relative">
-                        <label class="block text-black font-medium text-sm">Confirm Password</label>
-                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
-                        <button type="button" class="absolute right-3 top-8 text-gray-500" onclick="togglePassword('confirmPassword', 'toggleIcon2')">
-                            <i id="toggleIcon2" class="fa-solid fa-eye-slash"></i>
-                        </button>
+                        <!-- Phone Number -->
+                        <div>
+                            <label class="block text-black font-medium text-sm">Phone Number</label>
+                            <input type="text" name="phoneNo" placeholder="Enter your phone number" required
+                                   class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
+                        </div>
+
+                        <!-- Password -->
+                        <div class="relative">
+                            <label class="block text-black font-medium text-sm">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Enter your password" required
+                                   class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
+                            <button type="button" class="absolute right-3 top-8 text-gray-500" onclick="togglePassword('password', 'toggleIcon1')">
+                                <i id="toggleIcon1" class="fa-solid fa-eye-slash"></i>
+                            </button>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="relative">
+                            <label class="block text-black font-medium text-sm">Confirm Password</label>
+                            <input type="password" id="confirmPassword" placeholder="Confirm your password" required
+                                   class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-sm">
+                            <button type="button" class="absolute right-3 top-8 text-gray-500" onclick="togglePassword('confirmPassword', 'toggleIcon2')">
+                                <i id="toggleIcon2" class="fa-solid fa-eye-slash"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Signup Button -->
-                    <button type="submit" class="w-full bg-yellow-500 text-black font-bold py-2 rounded-lg hover:bg-yellow-600 transition text-sm">
+                    <button type="submit" class="w-full bg-yellow-500 text-black font-bold py-2 rounded-lg hover:bg-yellow-600 transition text-sm mt-4">
                         SIGNUP
                     </button>
 
@@ -87,6 +104,7 @@
                 </form>
             </div>
         </div>
+
 
         <!-- Toast Notification -->
         <div id="toast" class="toast">Signup Successful!</div>

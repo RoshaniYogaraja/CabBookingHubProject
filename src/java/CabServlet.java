@@ -37,11 +37,22 @@ public class CabServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    // @Override
+    // protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    //         throws ServletException, IOException {
+    //     getCabs(request, response);
+    // }
+      @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String action = request.getParameter("action");
+    
+    if ("delete".equals(action)) {
+        deleteCab(request, response);
+    } else {
         getCabs(request, response);
     }
+}
 
     private void saveCab(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String type = request.getParameter("type");
@@ -71,7 +82,7 @@ public class CabServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect("cab.jsp?error=db_error");
+            response.sendRedirect("Admin/cab.jsp?error=db_error");
         } finally {
             closeConnection(conn, stmt, null);
         }
@@ -113,6 +124,7 @@ public class CabServlet extends HttpServlet {
         }
     }
 
+    
     private void deleteCab(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
 
@@ -120,25 +132,35 @@ public class CabServlet extends HttpServlet {
         PreparedStatement stmt = null;
 
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+
             String query = "DELETE FROM cabs WHERE id = ?";
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                response.sendRedirect(request.getContextPath() + "Admin/cab.jsp?success=saved");
+                response.sendRedirect("Admin/cab.jsp?success=deleted");
             } else {
-                response.sendRedirect(request.getContextPath() + "Admin/cab.jsp?error=db_error");
+                response.sendRedirect("Admin/cab.jsp?error=db_error");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "Admin/cab.jsp?error=db_error");
+            response.sendRedirect("Admin/cab.jsp?error=db_error");
         } finally {
-            closeConnection(conn, stmt, null);
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
-
     private void getCabs(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection conn = null;
         PreparedStatement stmt = null;
