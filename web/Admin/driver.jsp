@@ -123,9 +123,12 @@
                                                     '<%= rs.getString("vehicle_assigned")%>')">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
-                            <a href="DriverServlet?action=delete&driverId=<%= rs.getInt("id")%>" class="btn btn-sm btn-danger">
+                            <a href="../DriverServlet?action=delete&driverId=<%= rs.getInt("id")%>"
+                               onclick="return confirm('Are you sure you want to delete this driver?');"
+                               class="btn btn-sm btn-danger">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
+
                         </td>
                     </tr>
                     <%

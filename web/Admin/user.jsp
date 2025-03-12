@@ -98,6 +98,8 @@
                         <th>#</th>
                         <th>Username</th>
                         <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
                         <th>Role</th>
                         <th>Created At</th>
                     </tr>
@@ -112,6 +114,8 @@
                         <td><%= rs.getInt("id")%></td>
                         <td><%= rs.getString("full_name")%></td>
                         <td><%= rs.getString("email")%></td>
+                        <td><%= rs.getString("address")%></td>
+                        <td><%= rs.getString("phoneNo")%></td>
                         <td><%= rs.getString("role")%></td>
                         <td><%= rs.getString("created_at")%></td>
                     </tr>

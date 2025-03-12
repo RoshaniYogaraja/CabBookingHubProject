@@ -101,6 +101,8 @@ public class SignupServlet extends HttpServlet {
             throws ServletException, IOException {
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        String phoneNo = request.getParameter("phoneNo");
         String password = request.getParameter("password");
 
         Connection conn = null;
@@ -110,12 +112,14 @@ public class SignupServlet extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
-            String query = "INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO users (full_name, email, address, phoneNo, password, role) VALUES (?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, fullName);
             stmt.setString(2, email);
-            stmt.setString(3, password);
-            stmt.setString(4, "user"); 
+            stmt.setString(3, address);
+            stmt.setString(4, phoneNo);
+            stmt.setString(5, password);
+            stmt.setString(6, "user");
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
